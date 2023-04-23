@@ -65,6 +65,9 @@ public class CharactorController : MonoBehaviour
 
     private InputManage _input;
 
+    /// <summary>
+    /// 起動時設定
+    /// </summary>
     void Awake()
     {
         if (_mainCamera == null)
@@ -75,12 +78,9 @@ public class CharactorController : MonoBehaviour
         TryGetComponent(out _animator);
     }
 
-    void Start()
-    {
-        
-    }
-
-    // 毎フレーム更新
+    /// <summary>
+    /// 毎フレーム更新
+    /// </summary>
     void Update()
     {
         _controller = GetComponent<CharacterController>();
@@ -91,6 +91,9 @@ public class CharactorController : MonoBehaviour
         Move();
     }
 
+    /// <summary>
+    /// 着地判定
+    /// </summary>
     private void GroundedCheck()
     {
         Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
@@ -105,8 +108,10 @@ public class CharactorController : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        //TODO：スプリントの実装
         float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
+        //入力がない場合は速度を0に設定
         if(_input.move == Vector2.zero)
         {
             targetSpeed = 0.0f;
@@ -120,10 +125,14 @@ public class CharactorController : MonoBehaviour
         if (currentHorizontalSpeed < targetSpeed - speedOffset ||
             currentHorizontalSpeed > targetSpeed + speedOffset)
         {
+#if false
+            //ちょっとしか動かなくなるのでTODO
             _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
                 Time.deltaTime * SpeedChangeRate);
 
             _speed = Mathf.Round(_speed * 1000f) / 1000f;
+#endif
+            _speed = targetSpeed;
         }
         else
         {
@@ -140,8 +149,8 @@ public class CharactorController : MonoBehaviour
 
         if (_input.move != Vector2.zero)
         {
-             _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                                  _mainCamera.transform.eulerAngles.y;
+             _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
+
             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                 RotationSmoothTime);
 
@@ -154,9 +163,11 @@ public class CharactorController : MonoBehaviour
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
         _animator.SetFloat("Speed", _animationBlend);
-
     }
 
+    /// <summary>
+    /// ジャンプ
+    /// </summary>
     private void JumpAndGravity()
     {
         Debug.Log(Grounded);
