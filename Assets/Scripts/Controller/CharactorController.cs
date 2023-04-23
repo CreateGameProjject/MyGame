@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class CharactorController : MonoBehaviour
 {
-
+    #region ƒpƒ‰ƒ[ƒ^
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
     public float MoveSpeed = 2.0f;
@@ -46,6 +46,7 @@ public class CharactorController : MonoBehaviour
 
     [Tooltip("What layers the character uses as ground")]
     public LayerMask GroundLayers;
+    #endregion
 
     private float _speed;
     private float _animationBlend;
