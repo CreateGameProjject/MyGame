@@ -19,6 +19,8 @@ public class InputManage : MonoBehaviour
 
     PlayerInput _input;
 
+    PlayerController _controller;
+
     void Awake()
     {
         TryGetComponent(out _input);
@@ -31,6 +33,7 @@ public class InputManage : MonoBehaviour
             _input.actions["Move"].performed += OnMove;
             _input.actions["Move"].canceled += OnMoveStop;
             _input.actions["Jump"].started += OnJump;
+            _input.actions["Attack"].started += OnAttack;
         }
     }
 
@@ -41,6 +44,7 @@ public class InputManage : MonoBehaviour
             _input.actions["Move"].performed -= OnMove;
             _input.actions["Move"].canceled -= OnMoveStop;
             _input.actions["Jump"].started -= OnJump;
+            _input.actions["Attack"].started -= OnAttack;
         }
     }
 
@@ -53,12 +57,19 @@ public class InputManage : MonoBehaviour
 
     void OnJump(InputAction.CallbackContext obj)
     {
+        //TODO:ÉWÉÉÉìÉvÇÃé¿ëï
         JumpInput(obj.started);
     }
 
     void OnMoveStop(InputAction.CallbackContext obj)
     {
         move = Vector2.zero;
+    }
+
+    void OnAttack(InputAction.CallbackContext obj)
+    {
+        Debug.Log("çUåÇÇ∑ÇÈÇ®ÅI");
+        //_controller.Attack();
     }
 
     void MoveInput(Vector2 newMoveDirection)
