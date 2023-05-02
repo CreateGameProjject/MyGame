@@ -57,8 +57,9 @@ public class InputManage : MonoBehaviour
 
     void OnJump(InputAction.CallbackContext obj)
     {
-        //TODO:ƒWƒƒƒ“ƒv‚ÌŽÀ‘•
         JumpInput(obj.started);
+
+        Debug.Log("aaaaaaaaaaaa");
     }
 
     void OnMoveStop(InputAction.CallbackContext obj)

@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour
         //Colliderにオブジェクトがヒットするか
         Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 
+        Debug.Log(Grounded);
         _animator.SetBool("IsGrounded", Grounded);
     }
 
